@@ -1,35 +1,55 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using AngularShop.Application.Dtos;
+using AngularShop.Application.Errors;
+using AngularShop.Application.Page;
+using AngularShop.Application.UseCases.Gateways;
 using AngularShop.Core.Entities;
-using AngularShop.Infra.Data;
+using AngularShop.Core.Specifications.Products;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AngularShop.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class ProductsController : ControllerBase
+    public class ProductsController : BaseController
     {
-        private readonly StoreContext _storeContext;
+        private readonly IProductUseCase _productUseCase;
 
-        public ProductsController(StoreContext storeContext)
+        public ProductsController(IProductUseCase productUseCase)
         {
-            _storeContext = storeContext;
+            _productUseCase = productUseCase;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductParamsSpec @params)
         {
-            var products = await _storeContext.Products.ToListAsync();
-            return Ok(products);
+            var response = await _productUseCase.GetProductsAsync(@params);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
         {
-            var product = await _storeContext.Products.FindAsync(id);
+            var product = await _productUseCase.GetProductByIdAsync(id);
+            if (product == null)
+                return NotFound(new ApiResponse(404));
+
             return Ok(product);
+        }
+
+        [HttpGet("brands")]
+        public async Task<ActionResult<ProductBrand>> GetProductBrands()
+        {
+            var productBrands = await _productUseCase.GetProductBrandsAsync();
+            return Ok(productBrands);
+        }
+
+        [HttpGet("types")]
+        public async Task<ActionResult<Product>> GetProductTypes()
+        {
+            var productTypes = await _productUseCase.GetProductTypesAsync();
+            return Ok(productTypes);
         }
     }
 }

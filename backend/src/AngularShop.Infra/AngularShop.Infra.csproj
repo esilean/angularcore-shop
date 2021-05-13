@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AngularShop.Core\AngularShop.Core.csproj" />
+    <ProjectReference Include="..\AngularShop.Application\AngularShop.Application.csproj"/>
   </ItemGroup>
 
 </Project>

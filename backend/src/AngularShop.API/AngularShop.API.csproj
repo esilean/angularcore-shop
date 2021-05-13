@@ -4,11 +4,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.6"/>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="5.0.6"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AngularShop.Infra\AngularShop.Infra.csproj" />
+    <ProjectReference Include="..\AngularShop.Application\AngularShop.Application.csproj"/>
+    <ProjectReference Include="..\AngularShop.Infra\AngularShop.Infra.csproj"/>
   </ItemGroup>
 </Project>
