@@ -7,15 +7,19 @@ using AngularShop.Core.Entities;
 using AngularShop.Core.Specifications.Products;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace AngularShop.API.Controllers
 {
     public class ProductsController : BaseController
     {
+        private readonly ILogger<ProductsController> _logger;
         private readonly IProductUseCase _productUseCase;
 
-        public ProductsController(IProductUseCase productUseCase)
+        public ProductsController(ILogger<ProductsController> logger,
+                                  IProductUseCase productUseCase)
         {
+            _logger = logger;
             _productUseCase = productUseCase;
         }
 

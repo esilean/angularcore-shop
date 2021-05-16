@@ -1,7 +1,9 @@
 using AngularShop.API.Extensions;
 using AngularShop.API.Middleware;
+using AngularShop.Application.Accessors.HttpHeaders;
 using AngularShop.Application.Mappers;
 using AngularShop.Core.Settings;
+using AngularShop.Infra.Accessors.HttpHeaders;
 using AngularShop.Infra.Data;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace AngularShop.API
 {
@@ -37,6 +40,9 @@ namespace AngularShop.API
             services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddControllers();
+            services.AddHttpContextAccessor();
+            services.AddTransient<ICorrelationIdAccessor, CorrelationIdAccessor>();
+
             services.AddApplicationServices();
             services.AddSwaggerDoc();
 
@@ -48,11 +54,16 @@ namespace AngularShop.API
                             .WithOrigins(apiSettingsData.ApiOriginUrl);
                 });
             });
+
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            Log.Information($"Hosting enviroment = {env.EnvironmentName}");
+
             app.UseMiddleware<ExceptionMiddleware>();
+            app.UseMiddleware<LogHeaderMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseSwaggerDoc();
@@ -61,6 +72,8 @@ namespace AngularShop.API
             app.UseStatusCodePagesWithReExecute("/errors/{0}");
 
             app.UseHttpsRedirection();
+
+            app.UseSerilogRequestLogging();
 
             app.UseRouting();
             app.UseStaticFiles();
