@@ -1,8 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Pagination } from '../shared/models/pagination';
+import { Product } from '../shared/models/product';
 import { ProductBrand } from '../shared/models/product-brand';
 import { ProductType } from '../shared/models/product-type';
 import { ShopParams } from '../shared/models/shop-params';
@@ -46,11 +48,15 @@ export class ShopService {
       );
   }
 
-  getBrands() {
+  getProduct(id: number): Observable<Product> {
+    return this.http.get<Product>(this.baseUrl + 'products/' + id);
+  }
+
+  getBrands(): Observable<ProductBrand[]> {
     return this.http.get<ProductBrand[]>(this.baseUrl + 'products/brands');
   }
 
-  getTypes() {
+  getTypes(): Observable<ProductType[]> {
     return this.http.get<ProductType[]>(this.baseUrl + 'products/types');
   }
 }
