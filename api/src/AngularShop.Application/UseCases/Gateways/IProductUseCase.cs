@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AngularShop.Application.Dtos;
+using AngularShop.Application.Dtos.Product;
 using AngularShop.Application.Page;
 using AngularShop.Core.Entities;
 using AngularShop.Core.Specifications.Products;

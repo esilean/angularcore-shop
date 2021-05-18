@@ -1,4 +1,4 @@
-namespace AngularShop.Application.Dtos
+namespace AngularShop.Application.Dtos.Product
 {
     public class ProductToReturnDto
     {

@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using AngularShop.Application.Dtos;
+using AngularShop.Application.Dtos.Product;
 using AngularShop.Application.Errors;
 using AngularShop.Application.Page;
 using AngularShop.Application.UseCases.Gateways;

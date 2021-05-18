@@ -1,4 +1,4 @@
-using AngularShop.Application.Dtos;
+using AngularShop.Application.Dtos.Product;
 using AngularShop.Core.Entities;
 using AngularShop.Core.Settings;
 using AutoMapper;
@@ -15,7 +15,7 @@ namespace AngularShop.Application.Mappers
         }
         public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
         {
-            if(!string.IsNullOrWhiteSpace(source.PictureUrl))
+            if (!string.IsNullOrWhiteSpace(source.PictureUrl))
             {
                 return _apiSettingsData.ApiUrl + source.PictureUrl;
             }

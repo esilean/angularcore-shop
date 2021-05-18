@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AngularShop.Application.Dtos;
+using AngularShop.Application.Dtos.Product;
 using AngularShop.Application.Page;
 using AngularShop.Application.UseCases.Gateways;
 using AngularShop.Core.Entities;

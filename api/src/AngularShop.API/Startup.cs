@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
+using StackExchange.Redis;
 
 namespace AngularShop.API
 {
@@ -37,6 +38,17 @@ namespace AngularShop.API
                 x.UseMySql(cnnString, ServerVersion.AutoDetect(cnnString));
             });
 
+            services.AddSingleton<IConnectionMultiplexer>(c =>
+            {
+                var configuration = new ConfigurationOptions
+                {
+                    EndPoints = { _configuration.GetConnectionString("Redis"), "6379" },
+                    AbortOnConnectFail = false,
+                    ConnectRetry = 2
+                };
+                return ConnectionMultiplexer.Connect(configuration);
+            });
+
             services.AddAutoMapper(typeof(MappingProfiles));
 
             services.AddControllers();
@@ -48,7 +60,8 @@ namespace AngularShop.API
 
             services.AddCors(opts =>
             {
-                opts.AddPolicy("CorsPolicy", policy => {
+                opts.AddPolicy("CorsPolicy", policy =>
+                {
                     policy.AllowAnyHeader()
                             .AllowAnyMethod()
                             .WithOrigins(apiSettingsData.ApiOriginUrl);
@@ -77,7 +90,7 @@ namespace AngularShop.API
 
             app.UseRouting();
             app.UseStaticFiles();
-            
+
             app.UseCors("CorsPolicy");
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

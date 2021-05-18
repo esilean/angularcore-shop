@@ -1,0 +1,22 @@
+services:
+
+  mysql:
+    image: mysql:8.0.20
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data:/data
+
+  redis:
+    image: redis:latest
+    ports:
+      - 6379:6379
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - redis-data:/data
+    
+volumes:
+  redis-data:
+  mysql-data:
