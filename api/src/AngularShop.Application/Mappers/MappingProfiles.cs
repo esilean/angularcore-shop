@@ -1,6 +1,8 @@
+using AngularShop.Application.Dtos.Address;
 using AngularShop.Application.Dtos.Basket;
 using AngularShop.Application.Dtos.Product;
 using AngularShop.Core.Entities;
+using AngularShop.Core.Entities.Identity;
 using AutoMapper;
 
 namespace AngularShop.Application.Mappers
@@ -9,7 +11,7 @@ namespace AngularShop.Application.Mappers
     {
         public MappingProfiles()
         {
-            CreateMap<Product, ProductToReturnDto>()
+            CreateMap<Product, ProductResponse>()
                 .ForMember(d => d.ProductBrand, o => o.MapFrom(x => x.ProductBrand.Name))
                 .ForMember(d => d.ProductType, o => o.MapFrom(x => x.ProductType.Name))
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductUrlResolver>());
@@ -17,8 +19,11 @@ namespace AngularShop.Application.Mappers
             CreateMap<BasketRequest, Basket>();
             CreateMap<BasketItemRequest, BasketItem>();
 
-            CreateMap<Basket, BasketToReturn>();
-            CreateMap<BasketItem, BasketItemToReturn>();
+            CreateMap<Basket, BasketResponse>();
+            CreateMap<BasketItem, BasketItemResponse>();
+
+            CreateMap<AddressRequest, Address>();
+            CreateMap<Address, AddressResponse>();
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace AngularShop.Application.Accessors.HttpHeaders
+namespace AngularShop.Application.Services.Accessors
 {
     public interface ICorrelationIdAccessor
     {

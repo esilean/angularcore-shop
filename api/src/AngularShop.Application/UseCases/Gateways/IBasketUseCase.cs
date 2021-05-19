@@ -5,8 +5,8 @@ namespace AngularShop.Application.UseCases.Gateways
 {
     public interface IBasketUseCase
     {
-        Task<BasketToReturn> GetBasketAsync(string basketId);
-        Task<BasketToReturn> UpdateBasketAsync(BasketRequest basketRequest);
+        Task<BasketResponse> GetBasketAsync(string basketId);
+        Task<BasketResponse> UpdateBasketAsync(BasketRequest basketRequest);
         Task<bool> RemoveBasketAsync(string basketId);
     }
 }

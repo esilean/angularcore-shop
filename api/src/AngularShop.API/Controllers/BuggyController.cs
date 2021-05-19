@@ -1,10 +1,19 @@
 using AngularShop.Application.Errors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AngularShop.API.Controllers
 {
     public class BuggyController : BaseController
     {
+
+        [HttpGet("testauth")]
+        [Authorize]
+        public ActionResult<string> TestAuth()
+        {
+            return "Testing authorization";
+        }
+
         [HttpGet("server-error")]
         public ActionResult<string> GetServerError()
         {

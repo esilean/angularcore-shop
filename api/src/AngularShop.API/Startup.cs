@@ -1,10 +1,13 @@
 using AngularShop.API.Extensions;
 using AngularShop.API.Middleware;
-using AngularShop.Application.Accessors.HttpHeaders;
 using AngularShop.Application.Mappers;
+using AngularShop.Application.Services.Accessors;
+using AngularShop.Application.Services.Security;
 using AngularShop.Core.Settings;
-using AngularShop.Infra.Accessors.HttpHeaders;
 using AngularShop.Infra.Data;
+using AngularShop.Infra.Identity;
+using AngularShop.Infra.Services.Accessors;
+using AngularShop.Infra.Services.Security;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +40,10 @@ namespace AngularShop.API
             {
                 x.UseMySql(cnnString, ServerVersion.AutoDetect(cnnString));
             });
+            services.AddDbContext<AppIdentityDbContext>(x =>
+            {
+                x.UseMySql(cnnString, ServerVersion.AutoDetect(cnnString));
+            });
 
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {
@@ -53,8 +60,13 @@ namespace AngularShop.API
 
             services.AddControllers();
             services.AddHttpContextAccessor();
-            services.AddTransient<ICorrelationIdAccessor, CorrelationIdAccessor>();
 
+            services.AddScoped<ICorrelationIdAccessor, CorrelationIdAccessor>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<ITokenService, TokenService>();
+
+
+            services.AddIdentityServices(apiSettingsData);
             services.AddApplicationServices();
             services.AddSwaggerDoc();
 
@@ -92,7 +104,9 @@ namespace AngularShop.API
             app.UseStaticFiles();
 
             app.UseCors("CorsPolicy");
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

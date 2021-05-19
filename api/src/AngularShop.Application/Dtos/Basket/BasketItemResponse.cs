@@ -1,6 +1,6 @@
 namespace AngularShop.Application.Dtos.Basket
 {
-    public class BasketItemToReturn
+    public class BasketItemResponse
     {
         public int Id { get; set; }
         public string ProductName { get; set; }

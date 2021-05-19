@@ -9,8 +9,8 @@ namespace AngularShop.Application.UseCases.Gateways
 {
     public interface IProductUseCase
     {
-        Task<Pagination<ProductToReturnDto>> GetProductsAsync(ProductParamsSpec @params);
-        Task<ProductToReturnDto> GetProductByIdAsync(int id);
+        Task<Pagination<ProductResponse>> GetProductsAsync(ProductParamsSpec @params);
+        Task<ProductResponse> GetProductByIdAsync(int id);
 
         Task<IReadOnlyList<ProductBrand>> GetProductBrandsAsync();
         Task<IReadOnlyList<ProductType>> GetProductTypesAsync();

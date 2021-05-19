@@ -18,15 +18,15 @@ namespace AngularShop.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<BasketToReturn>> GetBasketById(string id)
+        public async Task<ActionResult<BasketResponse>> GetBasketById(string id)
         {
             var basket = await _basketUseCase.GetBasketAsync(id);
 
-            return Ok(basket ?? new BasketToReturn(id));
+            return Ok(basket ?? new BasketResponse(id));
         }
 
         [HttpPost]
-        public async Task<ActionResult<BasketToReturn>> UpdateBasket(BasketRequest basketRequest)
+        public async Task<ActionResult<BasketResponse>> UpdateBasket(BasketRequest basketRequest)
         {
             var updatedBasket = await _basketUseCase.UpdateBasketAsync(basketRequest);
             return Ok(updatedBasket);

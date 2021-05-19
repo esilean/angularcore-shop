@@ -1,7 +1,8 @@
-using AngularShop.Application.Accessors.HttpHeaders;
+
+using AngularShop.Application.Services.Accessors;
 using Microsoft.AspNetCore.Http;
 
-namespace AngularShop.Infra.Accessors.HttpHeaders
+namespace AngularShop.Infra.Services.Accessors
 {
     public class CorrelationIdAccessor : ICorrelationIdAccessor
     {

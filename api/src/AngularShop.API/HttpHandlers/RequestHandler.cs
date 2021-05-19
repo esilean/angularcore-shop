@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using AngularShop.Application.Accessors.HttpHeaders;
+using AngularShop.Application.Services.Accessors;
 
 namespace AngularShop.API.HttpHandlers
 {

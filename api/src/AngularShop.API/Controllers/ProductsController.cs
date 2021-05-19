@@ -24,7 +24,7 @@ namespace AngularShop.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts([FromQuery] ProductParamsSpec @params)
+        public async Task<ActionResult<Pagination<ProductResponse>>> GetProducts([FromQuery] ProductParamsSpec @params)
         {
             var response = await _productUseCase.GetProductsAsync(@params);
             return Ok(response);
@@ -33,7 +33,7 @@ namespace AngularShop.API.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ApiResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<ProductToReturnDto>> GetProduct(int id)
+        public async Task<ActionResult<ProductResponse>> GetProduct(int id)
         {
             var product = await _productUseCase.GetProductByIdAsync(id);
             if (product == null)
@@ -43,6 +43,7 @@ namespace AngularShop.API.Controllers
         }
 
         [HttpGet("brands")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductBrand>> GetProductBrands()
         {
             var productBrands = await _productUseCase.GetProductBrandsAsync();
@@ -50,6 +51,7 @@ namespace AngularShop.API.Controllers
         }
 
         [HttpGet("types")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<Product>> GetProductTypes()
         {
             var productTypes = await _productUseCase.GetProductTypesAsync();

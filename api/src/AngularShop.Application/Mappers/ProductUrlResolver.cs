@@ -5,7 +5,7 @@ using AutoMapper;
 
 namespace AngularShop.Application.Mappers
 {
-    public class ProductUrlResolver : IValueResolver<Product, ProductToReturnDto, string>
+    public class ProductUrlResolver : IValueResolver<Product, ProductResponse, string>
     {
         private readonly ApiSettingsData _apiSettingsData;
 
@@ -13,7 +13,7 @@ namespace AngularShop.Application.Mappers
         {
             _apiSettingsData = apiSettingsData;
         }
-        public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
+        public string Resolve(Product source, ProductResponse destination, string destMember, ResolutionContext context)
         {
             if (!string.IsNullOrWhiteSpace(source.PictureUrl))
             {

@@ -13,6 +13,7 @@ namespace AngularShop.API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IAccountUseCase, AccountUseCase>();
             services.AddScoped<IProductUseCase, ProductUseCase>();
             services.AddScoped<IBasketUseCase, BasketUseCase>();
 

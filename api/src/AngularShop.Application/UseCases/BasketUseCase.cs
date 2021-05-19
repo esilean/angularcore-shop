@@ -17,18 +17,18 @@ namespace AngularShop.Application.UseCases
             _basketRepository = basketRepository;
             _mapper = mapper;
         }
-        public async Task<BasketToReturn> GetBasketAsync(string basketId)
+        public async Task<BasketResponse> GetBasketAsync(string basketId)
         {
             var basket = await _basketRepository.GetAsync(basketId);
-            return _mapper.Map<Basket, BasketToReturn>(basket);
+            return _mapper.Map<Basket, BasketResponse>(basket);
         }
 
-        public async Task<BasketToReturn> UpdateBasketAsync(BasketRequest basketRequest)
+        public async Task<BasketResponse> UpdateBasketAsync(BasketRequest basketRequest)
         {
             var newBasket = _mapper.Map<BasketRequest, Basket>(basketRequest);
 
             var updatedBasket = await _basketRepository.UpdateAsync(newBasket);
-            return _mapper.Map<Basket, BasketToReturn>(updatedBasket);
+            return _mapper.Map<Basket, BasketResponse>(updatedBasket);
         }
 
         public async Task<bool> RemoveBasketAsync(string basketId)

@@ -29,13 +29,13 @@ namespace AngularShop.Application.UseCases
             _mapper = mapper;
         }
 
-        public async Task<ProductToReturnDto> GetProductByIdAsync(int id)
+        public async Task<ProductResponse> GetProductByIdAsync(int id)
         {
             var product = await _productRepository.GetEntityWithSpec(new ProductsWithTypesAndBrandsSpecification(id));
-            return _mapper.Map<Product, ProductToReturnDto>(product);
+            return _mapper.Map<Product, ProductResponse>(product);
         }
 
-        public async Task<Pagination<ProductToReturnDto>> GetProductsAsync(ProductParamsSpec @params)
+        public async Task<Pagination<ProductResponse>> GetProductsAsync(ProductParamsSpec @params)
         {
             var spec = new ProductsWithTypesAndBrandsSpecification(@params);
             var countSpec = new ProductsWithFiltersForCountSpecification(@params);
@@ -43,9 +43,9 @@ namespace AngularShop.Application.UseCases
             var products = await _productRepository.ListAsync(spec);
             var totalProducts = await _productRepository.CountAsync(countSpec);
 
-            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductToReturnDto>>(products);
+            var data = _mapper.Map<IReadOnlyList<Product>, IReadOnlyList<ProductResponse>>(products);
 
-            var response = new Pagination<ProductToReturnDto>
+            var response = new Pagination<ProductResponse>
             {
                 PageSize = @params.PageSize,
                 PageIndex = @params.PageIndex,
