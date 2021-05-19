@@ -1,6 +1,5 @@
 # Application
 *.db
-ocelot.json
 publish
 PublishProfiles
 ServiceDependencies
