@@ -70,7 +70,7 @@ namespace AngularShop.API.Controllers
         }
 
         [HttpDelete("login/{email}")]
-        [Authorize]
+        [Authorize(Policy = "IsMasterEmail")]
         public async Task<IActionResult> Remove(string email)
         {
             var userRemoved = await _accountUseCase.Remove(email);

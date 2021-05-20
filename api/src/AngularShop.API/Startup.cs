@@ -1,5 +1,6 @@
 using AngularShop.API.Extensions;
 using AngularShop.API.Middleware;
+using AngularShop.Application.Dtos.Login;
 using AngularShop.Application.Mappers;
 using AngularShop.Application.Services.Accessors;
 using AngularShop.Application.Services.Security;
@@ -9,8 +10,11 @@ using AngularShop.Infra.Identity;
 using AngularShop.Infra.Services.Accessors;
 using AngularShop.Infra.Services.Security;
 using AutoMapper;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -58,13 +62,20 @@ namespace AngularShop.API
 
             services.AddAutoMapper(typeof(MappingProfiles));
 
-            services.AddControllers();
+            services.AddControllers(opts =>
+            {
+                // var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                // opts.Filters.Add(new AuthorizeFilter(policy));
+            })
+            .AddFluentValidation(cfg =>
+            {
+                cfg.RegisterValidatorsFromAssemblyContaining<LoginRequest>();
+            });
             services.AddHttpContextAccessor();
 
             services.AddScoped<ICorrelationIdAccessor, CorrelationIdAccessor>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<ITokenService, TokenService>();
-
 
             services.AddIdentityServices(apiSettingsData);
             services.AddApplicationServices();

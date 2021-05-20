@@ -1,8 +1,11 @@
+using System;
 using System.Text;
 using AngularShop.Core.Entities.Identity;
 using AngularShop.Core.Settings;
 using AngularShop.Infra.Identity;
+using AngularShop.Infra.Requirements;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -18,6 +21,15 @@ namespace AngularShop.API.Extensions
             builder.AddEntityFrameworkStores<AppIdentityDbContext>();
             builder.AddSignInManager<SignInManager<AppUser>>();
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsMasterEmail", policy =>
+                {
+                    policy.Requirements.Add(new IsMasterEmailRequirement());
+                });
+            });
+            services.AddTransient<IAuthorizationHandler, IsMasterEmailRequirementHandler>();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -29,9 +41,11 @@ namespace AngularShop.API.Extensions
                         ValidAudience = apiSettingsData.Token.Audience,
                         ValidateIssuer = true,
                         ValidateAudience = true,
-                        ValidateLifetime = true
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
                     };
                 });
+
 
             return services;
         }
