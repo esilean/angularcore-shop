@@ -2,7 +2,7 @@ using System.Linq;
 using AngularShop.Application.Errors;
 using AngularShop.Application.UseCases;
 using AngularShop.Application.UseCases.Gateways;
-using AngularShop.Core.Interfaces;
+using AngularShop.Core.Interfaces.Repositories;
 using AngularShop.Infra.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,7 +16,9 @@ namespace AngularShop.API.Extensions
             services.AddScoped<IAccountUseCase, AccountUseCase>();
             services.AddScoped<IProductUseCase, ProductUseCase>();
             services.AddScoped<IBasketUseCase, BasketUseCase>();
+            services.AddScoped<IOrderUseCase, OrderUseCase>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IBasketRepository, BasketRepository>();
             services.AddScoped(typeof(IGenericRepository<>), (typeof(GenericRepository<>)));

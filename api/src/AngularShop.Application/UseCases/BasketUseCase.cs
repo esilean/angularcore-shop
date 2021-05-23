@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using AngularShop.Application.Dtos.Basket;
 using AngularShop.Application.UseCases.Gateways;
 using AngularShop.Core.Entities;
-using AngularShop.Core.Interfaces;
+using AngularShop.Core.Interfaces.Repositories;
 using AutoMapper;
 
 namespace AngularShop.Application.UseCases

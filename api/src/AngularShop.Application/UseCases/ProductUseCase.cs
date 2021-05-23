@@ -5,7 +5,7 @@ using AngularShop.Application.Dtos.Product;
 using AngularShop.Application.Page;
 using AngularShop.Application.UseCases.Gateways;
 using AngularShop.Core.Entities;
-using AngularShop.Core.Interfaces;
+using AngularShop.Core.Interfaces.Repositories;
 using AngularShop.Core.Specifications.Products;
 using AutoMapper;
 

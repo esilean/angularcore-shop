@@ -16,9 +16,7 @@ namespace AngularShop.Application.Mappers
         public string Resolve(Product source, ProductResponse destination, string destMember, ResolutionContext context)
         {
             if (!string.IsNullOrWhiteSpace(source.PictureUrl))
-            {
                 return _apiSettingsData.ApiUrl + source.PictureUrl;
-            }
 
             return null;
         }

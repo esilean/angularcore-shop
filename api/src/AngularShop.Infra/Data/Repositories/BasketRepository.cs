@@ -2,7 +2,7 @@ using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 using AngularShop.Core.Entities;
-using AngularShop.Core.Interfaces;
+using AngularShop.Core.Interfaces.Repositories;
 using StackExchange.Redis;
 
 namespace AngularShop.Infra.Data.Repositories

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AngularShop.Core.Entities;
-using AngularShop.Core.Interfaces;
+using AngularShop.Core.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace AngularShop.Infra.Data.Repositories

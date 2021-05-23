@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AngularShop.Core.Entities;
-using AngularShop.Core.Interfaces;
+using AngularShop.Core.Interfaces.Repositories;
 using AngularShop.Core.Specifications;
 using AngularShop.Infra.Data.Specifications;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +46,22 @@ namespace AngularShop.Infra.Data.Repositories
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_storeContext.Set<T>().AsQueryable(), spec);
+        }
+
+        public void Add(T entity)
+        {
+            _storeContext.Set<T>().Add(entity);
+        }
+
+        public void Update(T entity)
+        {
+            _storeContext.Set<T>().Attach(entity);
+            _storeContext.Entry(entity).State = EntityState.Modified;
+        }
+
+        public void Delete(T entity)
+        {
+            _storeContext.Set<T>().Remove(entity);
         }
     }
 }

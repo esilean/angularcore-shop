@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AngularShop.Core.Entities;
 
-namespace AngularShop.Core.Interfaces
+namespace AngularShop.Core.Interfaces.Repositories
 {
     public interface IProductRepository
     {
